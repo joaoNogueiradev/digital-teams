@@ -16,4 +16,47 @@
     text-decoration: none;
     list-style-type: none;
     font-family: 'Open Sans', sans-serif;
+    border:1px solid black;
+    color:white;
+}
+
+body{
+    padding: 0 100px;
+    background-color: var(--dark-gray);
+}
+
+header{
+    display:flex;
+    padding-top: 20px;
+    align-items: center;
+}
+
+header .busca{
+    width:500px;
+    position: relative;
+    margin-left: 26px;
+}
+
+header .busca input{
+    width:100%;
+    height:46px;
+    background-color: var(--medium-gray);
+    padding-left: 26px;
+    border-radius:5px;
+    border:2px solid var(--light-gray);
+}
+
+header .busca box-icon{
+    position:absolute;
+    right:16px;
+    top:12px;
+    fill: var(--light-gray);
+    cursor:pointer;
+}
+header .busca box-icon:hover{
+    fill:var(--pink)
+}
+
+header .busca input:focus {
+    border-color:var(--pink);
 }
