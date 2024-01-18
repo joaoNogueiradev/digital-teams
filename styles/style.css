@@ -132,7 +132,7 @@ header .busca input:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: column  ;
 }
 
 #teams ul li h1 span{
