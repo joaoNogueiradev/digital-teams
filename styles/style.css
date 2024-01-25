@@ -189,9 +189,18 @@ header .busca input:focus {
     height:100%;
     background-color: var(--black-90);
     backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(5px);
     position:fixed;
     top:0;
     left:0;
+    opacity:0;
+    visibility: hidden;
+    transition-duration: 200ms;
+}
+
+#overlay.active{
+    opacity:1;
+    visibility:visible;
 }
 
 form{
