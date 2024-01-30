@@ -34,6 +34,12 @@ modal.onsubmit = () => {
 	let nomeTeam = nome.value;
 	let capacidadeTeam = Number(capacidade.value);
 
+	if (isNaN(capacidadeTeam)) {
+		alert("Por favor, digite um número válido para a capacidade.");
+		capacidade.value = "";
+		return; // Interrompe a execução do código se a entrada não for um número
+	}
+
 	listTeams.innerHTML = "";
 	listTeams.innerHTML = `
         <li>
@@ -49,5 +55,5 @@ modal.onsubmit = () => {
 	overlay.classList.remove("active");
 };
 
-// evento específico para form é o onsubmit
-// event.preventDefault(); previne que o form procure arquivos e faça o que foi comandado na função
+// Evento específico para form = onsubmit
+// event.preventDefault(); previne que o form procure arquivos e restringe o mesmo para que faça o que foi comandado na função sem interrupções.
