@@ -106,6 +106,15 @@ header .busca input:focus {
     margin-top: 20px;
 }
 
+#teams ul li.noTeam{
+    width:100%;
+}
+
+#teams ul li.noTeam h4{
+    width:100%;
+    justify-content: center;
+}
+
 #teams ul li{
     width:calc(20% - 13px);
     background-color: var(--medium-gray);
