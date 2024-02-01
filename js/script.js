@@ -21,8 +21,7 @@ overlay.onclick = () => {
 // 	}
 // });
 
-
-document.addEventListener("keydown", function(event) {
+document.addEventListener("keydown", function (event) {
 	if (event.key === "Escape") {
 		modal.classList.remove("active");
 		overlay.classList.remove("active");
@@ -31,17 +30,18 @@ document.addEventListener("keydown", function(event) {
 
 modal.onsubmit = () => {
     event.preventDefault();
-    
-    let capacidadeNumber = Number(capacidade.value);
 
-    if(isNaN(capacidadeTeam)){
-        alert("Favor inserir uma quantidade válida:");
-        capacidade.value="";
-        return;
-    }
+	let nomeTeam = nome.value;
+	let capacidadeTeam = Number(capacidade.value);
 
-    listTeams.innerHTML = '';
-    listTeams.innerHTML = `
+	if (isNaN(capacidadeTeam)) {
+		alert("Por favor, digite um número válido para a capacidade.");
+		capacidade.value = "";
+		return; // Interrompe a execução do código se a entrada não for um número
+	}
+
+	listTeams.innerHTML = "";
+	listTeams.innerHTML = `
         <li>
             <h4>${nome.value}<box-icon name='show'></box-icon></h4>
             <h1>0 <span>/ ${capacidadeNumber}</span></h1>
@@ -51,9 +51,9 @@ modal.onsubmit = () => {
             </div>
         </li>
     `;
-    modal.classList.remove("active");
-    overlay.classList.remove("active");
-}
+	modal.classList.remove("active");
+	overlay.classList.remove("active");
+};
 
 
 // evento específico para form é o onsubmit
