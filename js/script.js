@@ -1,3 +1,5 @@
+let teams = [];
+
 createBtn.onclick = () => {
 	modal.classList.add("active");
 	overlay.classList.add("active");
@@ -29,28 +31,32 @@ document.addEventListener("keydown", function (event) {
 });
 
 modal.onsubmit = () => {
-    event.preventDefault();
+	event.preventDefault();
 
-	let nomeTeam = nome.value;
-	let capacidadeTeam = Number(capacidade.value);
+	teams.push({
+		name: nome.value,
+		capacity: capacidade.value,
+		members:[]
+	});
 
-	if (isNaN(capacidadeTeam)) {
+	if (isNaN(capacidade.value)) {
 		alert("Por favor, digite um número válido para a capacidade.");
 		capacidade.value = "";
 		return; // Interrompe a execução do código se a entrada não for um número
 	}
 
-	listTeams.innerHTML = "";
-	listTeams.innerHTML = `
-        <li>
-            <h4>${nome.value}<box-icon name='show'></box-icon></h4>
-            <h1>0 <span>/ ${capacidadeNumber}</span></h1>
-            <div class="actions">
-                <button>adicionar</button>
-                <button><box-icon name="trash"></box-icon></button>
-            </div>
-        </li>
-    `;
+
+	// listTeams.innerHTML = "";
+	// listTeams.innerHTML = `
+    //     <li>
+    //         <h4>${nome.value}<box-icon name='show'></box-icon></h4>
+    //         <h1>0 <span>/ ${capacidadeTeam}</span></h1>
+    //         <div class="actions">
+    //             <button>adicionar</button>
+    //             <button><box-icon name="trash"></box-icon></button>
+    //         </div>
+    //     </li>
+    // `;
 	modal.classList.remove("active");
 	overlay.classList.remove("active");
 };
