@@ -1,121 +1,45 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Teams</title>
-    <link rel="stylesheet" href="styles/style.css">
-</head>
-<body>
-    <header>
-        <div class="logo">
-            <img src="imgs/logo.png" alt="Logo digital teams">
-        </div>
-        <div class="busca">
-            <input type="text" placeholder="Qual grupo você está procurando?">
-            <box-icon name='search-alt-2'></box-icon>
-        </div>
-    </header>  
-    <main>
-        <section id="teams" class="container">
-            <h2>Teams <button id="createBtn"><box-icon name='plus'></box-icon>NOVO TEAM</button></h2>
-            <ul id="listTeams">
-                <li class="noTeam"><h4>Você ainda não criou um team :(</h4></li>
-                <!-- <li>
-                    <h4>Nome do team <box-icon name='show'></box-icon></h4>
-                    <h1>0 <span>/ 0</span></h1>
-                    <div class="actions">
-                        <button>adicionar</button>
-                        <button><box-icon name="trash"></box-icon></button>
-                    </div>
-                </li>
-                <li>
-                    <h4>Nome do team <box-icon name='show'></box-icon></h4>
-                    <h1>0 <span>/ 0</span></h1>
-                    <div class="actions">
-                        <button>adicionar</button>
-                        <button><box-icon name="trash"></box-icon></button>
-                    </div>
-                </li>
-                <li>
-                    <h4>Nome do team <box-icon name='show'></box-icon></h4>
-                    <h1>0 <span>/ 0</span></h1>
-                    <div class="actions">
-                        <button>adicionar</button>
-                        <button><box-icon name="trash"></box-icon></button>
-                    </div>
-                </li>
-                <li>
-                    <h4>Nome do team <box-icon name='show'></box-icon></h4>
-                    <h1>0 <span>/ 0</span></h1>
-                    <div class="actions">
-                        <button>adicionar</button>
-                        <button><box-icon name="trash"></box-icon></button>
-                    </div>
-                </li>
-                <li>
-                    <h4>Nome do team <box-icon name='show'></box-icon></h4>
-                    <h1>0 <span>/ 0</span></h1>
-                    <div class="actions">
-                        <button>adicionar</button>
-                        <button><box-icon name="trash"></box-icon></button>
-                    </div>
-                </li>
-                <li>
-                    <h4>Nome do team <box-icon name='show'></box-icon></h4>
-                    <h1>0 <span>/ 0</span></h1>
-                    <div class="actions">
-                        <button>adicionar</button>
-                        <button><box-icon name="trash"></box-icon></button>
-                    </div>
-                </li>
-                <li>
-                    <h4>Nome do team <box-icon name='show'></box-icon></h4>
-                    <h1>0 <span>/ 0</span></h1>
-                    <div class="actions">
-                        <button>adicionar</button>
-                        <button><box-icon name="trash"></box-icon></button>
-                    </div>
-                </li>
-                <li>
-                    <h4>Nome do team <box-icon name='show'></box-icon></h4>
-                    <h1>0 <span>/ 0</span></h1>
-                    <div class="actions">
-                        <button onclick="activeClass()">adicionar</button>
-                        <button><box-icon name="trash"></box-icon></button>
-                    </div>
-                </li>
-                <li>
-                    <h4>Nome do team <box-icon name='show'></box-icon></h4>
-                    <h1>0 <span>/ 0</span></h1>
-                    <div class="actions">
-                        <button>adicionar</button>
-                        <button><box-icon name="trash"></box-icon></button>
-                    </div>
-                </li>
-                <li>
-                    <h4>Nome do team <box-icon name='show'></box-icon></h4>
-                    <h1>0 <span>/ 0</span></h1>
-                    <div class="actions">
-                        <button>adicionar</button>
-                        <button><box-icon name="trash"></box-icon></button>
-                    </div>
-                </li> -->
-            </ul>
-        </section>
-    </main>  
-    <div id="overlay"></div>
-    <form id="modal">
-        <h3>Criar <box-icon name="x" id="closeBtn"></box-icon></h3>
-        <label for="nome">Nome do team:</label>
-        <input type="text" id="nome" required>
-        <label for="capacidade">Capacidade do Team: </label>
-        <input type="text" id="capacidade" required>
-        <button type="submit">Criar</button>
-    </form>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Digital Teams</title>
+		<link rel="stylesheet" href="styles/style.css" />
+	</head>
+	<body>
+		<header>
+			<div class="logo">
+				<img src="imgs/logo.png" alt="Logo digital teams" />
+			</div>
+			<div class="busca">
+				<input type="text" placeholder="Qual grupo você está procurando?" />
+				<box-icon name="search-alt-2"></box-icon>
+			</div>
+		</header>
+		<main>
+			<section id="teams" class="container">
+				<h2>
+					Teams
+					<button id="createBtn">
+						<box-icon name="plus"></box-icon>NOVO TEAM
+					</button>
+				</h2>
+				<ul id="listTeams">
+					<li class="noTeam"><h4>Você ainda não criou um team :(</h4></li>
+				</ul>
+			</section>
+		</main>
+		<div id="overlay"></div>
+		<form id="modal">
+			<h3>Criar <box-icon name="x" id="closeBtn"></box-icon></h3>
+			<label for="nome">Nome do team:</label>
+			<input type="text" id="nome" required />
+			<label for="capacidade">Capacidade do Team: </label>
+			<input type="text" id="capacidade" required />
+			<button type="submit">Criar</button>
+		</form>
 
-
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-    <script src="./js/script.js"></script>
-</body>
+		<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+		<script src="./js/script.js"></script>
+	</body>
 </html>
