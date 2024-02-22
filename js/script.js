@@ -1,4 +1,5 @@
 let teams = [];
+let deletedTeams =  [];
 
 createBtn.onclick = () => {
 	modal.classList.add("active");
@@ -47,6 +48,7 @@ modal.onsubmit = () => {
 	}
 
 	teams.push({
+		id:teams.length + 1,
 		name: newTeamName,
 		capacity: capacidade.value,
 		members: [],
@@ -60,23 +62,75 @@ modal.onsubmit = () => {
 
 };
 
+listDeletedTeams.onload = () => {
 
-function adicionarCards(){
-	listTeams.innerHTML = '';
-	for(let i = 0; i < teams.length; i++){
-		listTeams.innerHTML += `
-		<li>
-		<h4>${teams[i].name}<box-icon name='show'></box-icon></h4>
-		<h1>0 <span>/ ${teams[i].capacity}</span></h1>
-		<div class="actions">
-			<button>adicionar</button>
-			<button><box-icon name="trash"></box-icon></button>
-		</div>
-		</li>
-		`
-	} 	 
 }
 
+
+function adicionarCards(){
+
+	if(teams.length ===0){
+		listTeams.innerHTML = `<li class="noTeam"><h4>Você ainda não criou um team :(</h4></li>`;
+	} else {
+		listTeams.innerHTML = '';
+		for(let i = 0; i < teams.length; i++){
+			listTeams.innerHTML += `
+			<li>
+			<h4>${teams[i].name}<box-icon name='show'></box-icon></h4>
+			<h1>0 <span>/ ${teams[i].capacity}</span></h1>
+			<div class="actions">
+				<button>adicionar</button>
+				<button id="${i}" onclick="removeTeam(${i})"><box-icon name="trash"></box-icon></button>
+				</div>
+				</li>
+				`;
+		} 	 
+	}
+}
+
+function removeTeam(index) {
+    let idRemovedTeam = teams[index].id;
+    let nameRemovedTeam = teams[index].name;
+	let capacityRemovedTeam = teams[index].capacity;
+	let membersRemovedTeam = teams[index].members;
+
+	if (confirm(`Tem certeza que gostaria de excluir o time '${nameRemovedTeam}' ?`)) {
+		teams.splice(idRemovedTeam - 1);
+		deletedTeams.push({
+			id:idRemovedTeam,
+			name: nameRemovedTeam,
+			capacity: capacityRemovedTeam,
+			members: membersRemovedTeam,
+		});
+
+ 
+	} else {
+		alert("Exclusão cancelada!");
+		return;
+	};
+	
+	adicionarCards();
+	addDeletedCards();
+};
+
+function addDeletedCards(){
+	if(deletedTeams.length === 0){
+		listDeletedTeams.innerHTML = `<li class="noTeam"><h4>Você ainda não tem times excluídos!</h4></li>`;
+	} else {
+		listDeletedTeams.innerHTML = '';
+		for(let i = 0; i < deletedTeams.length; i++){
+			listDeletedTeams.innerHTML += `
+			<li class="layoutDeletedTeams">
+			<h4>${deletedTeams[i].name}<box-icon name='show'></box-icon></h4>
+			<h1>0 <span>/ ${deletedTeams[i].capacity}</span></h1>
+			<div class="actions">
+				<button>restaurar</button>
+			</div>
+		</li>
+		`;
+		} 	 
+	}
+}
 
 
 // evento específico para form é o onsubmit

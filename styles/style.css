@@ -66,6 +66,7 @@ header .busca input:focus {
     margin-top:65px;
 }
 
+
 #teams h2{
     display:flex;
     font-size:24px;
@@ -205,6 +206,15 @@ header .busca input:focus {
     opacity:0;
     visibility: hidden;
     transition-duration: 200ms;
+}
+
+#listDeletedTeams .layoutDeletedTeams {
+    opacity: 0.4;
+    transition: opacity 0.5s;
+}
+
+#listDeletedTeams .layoutDeletedTeams:hover {
+    opacity: 1;
 }
 
 #overlay.active{
