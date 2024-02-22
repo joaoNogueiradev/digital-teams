@@ -11,9 +11,15 @@ closeBtn.onclick = () => {
 	overlay.classList.remove("active");
 };
 
+fecharParticipanteBtn.onclick = () => {
+	formParticipante.classList.remove("active");
+	overlay.classList.remove("active");
+};
+
 overlay.onclick = () => {
 	modal.classList.remove("active");
 	overlay.classList.remove("active");
+	formParticipante.classList.remove("active");
 };
 
 
@@ -24,6 +30,13 @@ document.addEventListener("keydown", (event) => {
 	}
 });
 
+formParticipante.onsubmit = () => {
+	event.preventDefault();
+	teams[Number(teamId.value)].members.push(nomeParticipante.value);
+	alert("Participante inserido com sucesso!");
+	formParticipante.reset();
+}
+
 modal.onsubmit = () => {
 	event.preventDefault();
 
@@ -33,23 +46,11 @@ modal.onsubmit = () => {
 		return; // Interrompe a execução do código se a entrada não for um número
 	}
 
-
-	let newTeamName = nome.value;
-
-	for (let i = 0; i < teams.length; i++) {
-		if (teams[i].name === newTeamName) {
-			if (confirm("Já existe um time com esse nome, gostaria de repetir a criação?")) {
-			} else {
-				alert("Criação cancelada!");
-				nome.value = '';
-				return;
-			}
-		}
-	}
+	verifyName(nome.value) //if else para confirmação
 
 	teams.push({
 		id:teams.length + 1,
-		name: newTeamName,
+		name: nome.value,
 		capacity: capacidade.value,
 		members: [],
 	});
@@ -57,14 +58,13 @@ modal.onsubmit = () => {
 	
 	modal.classList.remove("active");
 	overlay.classList.remove("active");
-	
-	adicionarCards();
 
+	adicionarCards();
+	
+	modal.reset();
 };
 
-listDeletedTeams.onload = () => {
-
-}
+let btnAdicionar = document.querySelector(".adicionar");
 
 
 function adicionarCards(){
@@ -79,8 +79,8 @@ function adicionarCards(){
 			<h4>${teams[i].name}<box-icon name='show'></box-icon></h4>
 			<h1>0 <span>/ ${teams[i].capacity}</span></h1>
 			<div class="actions">
-				<button>adicionar</button>
-				<button id="${i}" onclick="removeTeam(${i})"><box-icon name="trash"></box-icon></button>
+				<button onclick="showMemberForm(${i})">adicionar</button>
+				<button onclick="removeTeam(${i})"><box-icon name="trash"></box-icon></button>
 				</div>
 				</li>
 				`;
@@ -95,15 +95,13 @@ function removeTeam(index) {
 	let membersRemovedTeam = teams[index].members;
 
 	if (confirm(`Tem certeza que gostaria de excluir o time '${nameRemovedTeam}' ?`)) {
-		teams.splice(idRemovedTeam - 1);
+		teams.splice(idRemovedTeam - 1,1);
 		deletedTeams.push({
 			id:idRemovedTeam,
 			name: nameRemovedTeam,
 			capacity: capacityRemovedTeam,
 			members: membersRemovedTeam,
 		});
-
- 
 	} else {
 		alert("Exclusão cancelada!");
 		return;
@@ -131,6 +129,27 @@ function addDeletedCards(){
 		} 	 
 	}
 }
+
+function verifyName(nome){
+	let foundName = false;
+	for (let i = 0; i < teams.length; i++) {
+	if (teams[i].name === nome) {
+		if (confirm("Já existe um time com esse nome, gostaria de repetir a criação?")) {
+		} else {
+			alert("Criação cancelada!");
+			nome.value = '';
+			return;
+		}
+	}
+}	
+}
+
+function showMemberForm(index){
+	overlay.classList.add("active");
+	formParticipante.classList.add("active");
+	teamId.value = index
+}
+
 
 
 // evento específico para form é o onsubmit
