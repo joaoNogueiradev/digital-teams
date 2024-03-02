@@ -1,5 +1,13 @@
-let teams = [];
-let deletedTeams =  [];
+const cachedTeams = JSON.parse(window.localStorage.getItem('cachedTeams'));
+const deletedCachedTeams = JSON.parse(window.localStorage.getItem('cachedDeletedItems'));
+
+const teams = cachedTeams || [];
+const deletedTeams =  deletedCachedTeams || [];
+
+window.onload = () => {
+	renderCards();
+	renderDeletedCards();
+}
 
 createBtn.onclick = () => {
 	modal.classList.add("active");
@@ -37,7 +45,7 @@ document.addEventListener("keydown", (event) => {
 	}
 });
 
-formParticipante.onsubmit = () => {
+formParticipante.onsubmit = (event) => {
 	event.preventDefault();
 
 	if(teams[Number(teamId.value)].members.length == teams[Number(teamId.value)].capacity){
@@ -49,17 +57,17 @@ formParticipante.onsubmit = () => {
 		teams[Number(teamId.value)].members.push(nomeParticipante.value);
 		alert("Participante inserido com sucesso!");
 		formParticipante.reset();
-		adicionarCards();
+		renderCards();
 	}
 }
 
-modal.onsubmit = () => {
+modal.onsubmit = (event) => {
 	event.preventDefault();
 
 	if (isNaN(capacidade.value)) {
 		alert("Por favor, digite um número válido para a capacidade.");
 		capacidade.value = "";
-		return; // Interrompe a execução do código se a entrada não for um número
+		return;
 	}
 
 	if(verifyName(nome.value)){
@@ -69,87 +77,61 @@ modal.onsubmit = () => {
 			nome.value = '';
 			return;
 		}
-	} //if else para confirmação
+	}
 
-	teams.push({
+	const newTeam = {
 		id:teams.length + 1,
 		name: nome.value,
 		capacity: capacidade.value,
 		members: []
-	});
+	}
 
-	
+	teams.push(newTeam);
+	window.localStorage.setItem('cachedTeams', JSON.stringify(teams))
+
 	modal.classList.remove("active");
 	overlay.classList.remove("active");
 
-	adicionarCards();
+	renderCards();
 	modal.reset();
 };
 
 let btnAdicionar = document.querySelector(".adicionar");
 
 
-function adicionarCards(){
-
-	if(teams.length === 0){
-		listTeams.innerHTML = `<li class="noTeam"><h4>Você ainda não criou um team :(</h4></li>`;
-	} else {
-		listTeams.innerHTML = '';
-		for(let i = 0; i < teams.length; i++){
-			listTeams.innerHTML += `
-			<li>
-			<h4>${teams[i].name}<box-icon name='show' onclick="showMembersList(${i})"></box-icon></h4>
-			<h1>${teams[i].members.length} <span>/ ${teams[i].capacity}</span></h1>
-			<div class="actions">
-				<button onclick="showMemberForm(${i})">adicionar</button>
-				<button onclick="removeTeam(${i})"><box-icon name="trash"></box-icon></button>
-				</div>
-				</li>
-				`;
-		} 	 
-	}
+function renderCards(){
+	createCard(teams)
 }
 
 function removeTeam(index) {
     let idRemovedTeam = teams[index].id;
     let nameRemovedTeam = teams[index].name;
-	let capacityRemovedTeam = teams[index].capacity;
-	let membersRemovedTeam = teams[index].members;
+		let capacityRemovedTeam = teams[index].capacity;
+		let membersRemovedTeam = teams[index].members;
 
 	if (confirm(`Tem certeza que gostaria de excluir o time '${nameRemovedTeam}' ?`)) {
 		teams.splice(idRemovedTeam - 1,1);
-		deletedTeams.push({
+
+		const deletedTeam = {
 			id:idRemovedTeam,
 			name: nameRemovedTeam,
 			capacity: capacityRemovedTeam,
 			members: membersRemovedTeam,
-		});
+		}
+
+		deletedTeams.push(deletedTeam);
+		window.localStorage.setItem('cachedDeletedItems', JSON.stringify(deletedTeams));
 	} else {
 		alert("Exclusão cancelada!");
 		return;
 	};
 	
-	adicionarCards();
-	addDeletedCards();
+	renderCards();
+	renderDeletedCards();
 };
 
-function addDeletedCards(){
-	if(deletedTeams.length === 0){
-		listDeletedTeams.innerHTML = `<li class="noTeam"><h4>Você ainda não tem times excluídos!</h4></li>`;
-	} else {
-		listDeletedTeams.innerHTML = '';
-		for(let i = 0; i < deletedTeams.length; i++){
-			listDeletedTeams.innerHTML += `
-			<li class="layoutDeletedTeams">
-			<h4>${deletedTeams[i].name}<box-icon name='show'></box-icon></h4>
-			<h1>${deletedTeams[i].members.length} <span>/ ${deletedTeams[i].capacity}</span></h1>
-			<div class="actions">
-				<button onclick="restoreTeam(${i})">restaurar</button>
-			</div>
-		</li>
-		`;
-		} 	 
-	}
+function renderDeletedCards() {
+	createDeletedCard(deletedTeams)
 }
 
 function verifyName(nome){
@@ -162,7 +144,7 @@ function verifyName(nome){
 	}
 }
 
-function showMemberForm(index){
+function showMemberForm() { 
 	overlay.classList.add("active");
 	formParticipante.classList.add("active");
 }
@@ -196,8 +178,8 @@ function restoreTeam(index){
 		return;
 	};
 	
-	addDeletedCards();
-	adicionarCards();
+	renderCards();
+	renderDeletedCards();
 }
 
 function searchTeam() {
@@ -223,3 +205,42 @@ function searchTeam() {
 // sempre que precisar de uma
 // quando precisar iterar elementos (Sem usar createElement e appendChild), utilizar variáveis para que o novo elemento seja colocado e usaddo em iteração
 // ao clicar em "exibir membros", ter o campo de adicionar funçção dentro do time
+
+function createCard(data) {
+	if(data.length === 0) {
+		listTeams.innerHTML = `<li class="noTeam"><h4>Você ainda não criou um team :(</h4></li>`;
+	} else {
+		listTeams.innerHTML = '';
+		for(let i = 0; i < data.length; i++){
+			listTeams.innerHTML += `
+			<li>
+			<h4>${data[i].name}<box-icon name='show' onclick="showMembersList(${i})"></box-icon></h4>
+			<h1>${data[i].members.length} <span>/ ${data[i].capacity}</span></h1>
+			<div class="actions">
+				<button onclick="showMemberForm(${i})">adicionar</button>
+				<button onclick="removeTeam(${i})"><box-icon name="trash"></box-icon></button>
+				</div>
+				</li>
+				`;
+		} 	 
+	}
+}
+
+function createDeletedCard(data) {
+	if(data.length === 0){
+		listDeletedTeams.innerHTML = `<li class="noTeam"><h4>Você ainda não tem times excluídos!</h4></li>`;
+	} else {
+		listDeletedTeams.innerHTML = '';
+		for(let i = 0; i < data.length; i++){
+			listDeletedTeams.innerHTML += `
+			<li class="layoutDeletedTeams">
+			<h4>${data[i].name}<box-icon name='show'></box-icon></h4>
+			<h1>${data[i].members.length} <span>/ ${data[i].capacity}</span></h1>
+			<div class="actions">
+				<button onclick="restoreTeam(${i})">restaurar</button>
+			</div>
+		</li>
+		`;
+		} 	 
+	}
+}
