@@ -9,10 +9,10 @@
 	<body>
 		<header>
 			<div class="logo">
-				<img src="imgs/logo.png" alt="Logo digital teams" />
+				<img src="imgs/logo.png" alt="Logo FyGo" />
 			</div>
 			<div class="busca">
-				<input type="text" placeholder="Qual grupo você está procurando?" />
+				<input type="text" placeholder="Qual grupo você está procurando?" onkeyup="searchTeam()"/>
 				<box-icon name="search-alt-2"></box-icon>
 			</div>
 		</header>
@@ -52,6 +52,13 @@
 			<label for="nome">Nome do participante:</label>
 			<input type="text" id="nomeParticipante" required />
 			<button type="submit">Adicionar</button>
+		</form>
+
+		<form id="formMostrarMembros">
+			<h3>Membros do Team: <box-icon name="x" id="fecharMostrarMembros"></box-icon></h3>
+			<ul id="membersList">
+
+			</ul>
 		</form>
 
 		<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>

@@ -66,7 +66,6 @@ header .busca input:focus {
     margin-top:65px;
 }
 
-
 #teams h2{
     display:flex;
     font-size:24px;
@@ -106,7 +105,9 @@ header .busca input:focus {
     gap:16px;
     margin-top: 20px;
 }
-
+#teams ul li.none{
+    display: none;
+}
 #teams ul li.noTeam{
     width:100%;
 }
